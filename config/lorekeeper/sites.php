@@ -70,7 +70,7 @@ return [
         'icon'          => 'fab fa-instagram',
         'auth'          => 0,
         'login'         => 0,
-        'primary_alias' => 0,
+        'primary_alias' => 1,
     ],
 
     'tumblr'     => [
@@ -81,7 +81,7 @@ return [
         'icon'          => 'fab fa-tumblr',
         'auth'          => 0,
         'login'         => 0,
-        'primary_alias' => 0,
+        'primary_alias' => 1,
     ],
 
     'imgur'      => [
@@ -112,7 +112,7 @@ return [
         'regex'         => '/([A-Za-z0-9_-]+)#([0-9]+)/m',
         'icon'          => 'fab fa-discord',
         'auth'          => 0,
-        'primary_alias' => 0,
+        'primary_alias' => 1,
     ],
 
     /**********************************************************************************************
