@@ -78,12 +78,16 @@
         <div class="form-group row">
             <label class="col-md-2 col-form-label">Setting</label>
             <div class="col-md-10">
+<<<<<<< HEAD
                 {!! Form::select(
                     'birthday_setting',
                     ['0' => '0: No one can see your birthday.', '1' => '1: Members can see your day and month.', '2' => '2: Anyone can see your day and month.', '3' => '3: Full date public.'],
                     Auth::user()->settings->birthday_setting,
                     ['class' => 'form-control'],
                 ) !!}
+=======
+                {!! Form::select('birthday_setting', ['0' => '0: No one can see your birthday.', '1' => '1: Members can see your day and month.', '2' => '2: Anyone can see your day and month.', '3' => '3: Full date public.', '4' => '4: Members can see the month.', '5' => '5: Anyone can see the month.'],Auth::user()->settings->birthday_setting, ['class' => 'form-control']) !!}
+>>>>>>> 07b2fcecf7bda9d0f2ccab1f5844e2151cbdb4be
             </div>
         </div>
         <div class="text-right">

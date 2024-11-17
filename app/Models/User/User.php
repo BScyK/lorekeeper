@@ -185,6 +185,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     /**
      * Get all of the user's character bookmarks.
      */
+<<<<<<< HEAD
     public function bookmarks() {
         return $this->hasMany(CharacterBookmark::class)->where('user_id', $this->id);
     }
@@ -194,6 +195,11 @@ class User extends Authenticatable implements MustVerifyEmail {
      */
     public function commentLikes() {
         return $this->hasMany(CommentLike::class);
+=======
+    public function bookmarks()
+    {
+        return $this->hasMany('App\Models\Character\CharacterBookmark')->where('user_id', $this->id);
+>>>>>>> 07b2fcecf7bda9d0f2ccab1f5844e2151cbdb4be
     }
 
     /**********************************************************************************************
@@ -438,14 +444,26 @@ class User extends Authenticatable implements MustVerifyEmail {
                 return $bday->format('d M').$icon;
                 break;
             case 3:
+<<<<<<< HEAD
                 return $bday->format('d M Y').$icon;
                 break;
+=======
+                return $bday->format('d M Y') . $icon;
+            break;
+            case 4:
+                if(Auth::check()) return $bday->format('M');
+            break;
+            case 5:
+                return $bday->format('M');
+            break;
+>>>>>>> 07b2fcecf7bda9d0f2ccab1f5844e2151cbdb4be
         }
     }
 
     /**
      * Check if user is of age.
      */
+<<<<<<< HEAD
     public function getcheckBirthdayAttribute() {
         $bday = $this->birthday;
         if (!$bday || $bday->diffInYears(carbon::now()) < 13) {
@@ -453,6 +471,13 @@ class User extends Authenticatable implements MustVerifyEmail {
         } else {
             return true;
         }
+=======
+    public function getcheckBirthdayAttribute()
+    {
+        $bday = $this->birthday;
+        if(!$bday || $bday->diffInYears(carbon::now()) < 13) return false;
+        else return true;
+>>>>>>> 07b2fcecf7bda9d0f2ccab1f5844e2151cbdb4be
     }
     /**********************************************************************************************
 
