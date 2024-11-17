@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel {
         $schedule->command('check-news')
             ->everyMinute();
         $schedule->command('check-sales')
-<<<<<<< HEAD
             ->everyMinute();
         $schedule->exec('rm public/images/avatars/*.tmp')
             ->daily();
@@ -30,12 +29,6 @@ class Kernel extends ConsoleKernel {
             ->daily();
         $schedule->command('update-staff-reward-actions')
             ->daily();
-=======
-                ->everyMinute();
-        $schedule->command('distribute-birthday-rewards')
-                ->monthly();
-
->>>>>>> 07b2fcecf7bda9d0f2ccab1f5844e2151cbdb4be
     }
 
     /**
