@@ -24,10 +24,4 @@ return [
         'text_color'       => '#ffffff',
         'background_color' => '#1fd1a7',
     ],
-
-    'theme' => [
-        'name' => 'Theme',
-        'text_color' => "#ffffff",
-        'background_color' => '#573f7e'
-    ]
 ];
