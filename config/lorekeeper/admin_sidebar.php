@@ -220,6 +220,14 @@ return [
                 'name' => 'File Manager',
                 'url'  => 'admin/files',
             ],
+<<<<<<< HEAD
         ],
+=======
+            [
+                'name' => 'Theme Manager',
+                'url' => 'admin/themes'
+            ],
+        ]
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
     ],
 ];

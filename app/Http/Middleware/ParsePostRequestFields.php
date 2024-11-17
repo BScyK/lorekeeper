@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+<<<<<<< HEAD
 class ParsePostRequestFields {
     /**
      * Handle an incoming request.
@@ -16,6 +17,20 @@ class ParsePostRequestFields {
     public function handle(Request $request, Closure $next) {
         if ($request->isMethod('post')) {
             $excludedFields = ['_token', 'password', 'email', 'description', 'text', 'criteria'];
+=======
+class ParsePostRequestFields
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next) {
+        if ($request->isMethod('post')) {
+            $excludedFields = ['_token', 'password', 'email', 'description', 'text'];
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             $strippedFields = ['name', 'title'];
 
             $parsedFields = [];
@@ -43,8 +58,17 @@ class ParsePostRequestFields {
 
     /**
      * Recursively parse array values.
+<<<<<<< HEAD
      */
     private function parseArray(array $array, array $strippedFields): array {
+=======
+     *
+     * @param  array  $array
+     * @param  array  $strippedFields
+     * @return array
+     */
+    private function parseArray(array $array, array $strippedFields) : array {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
         foreach ($array as $key => $value) {
             if (is_numeric($value)) {
                 continue;

@@ -79,21 +79,80 @@
     <link href="{{ asset('css/selectize.bootstrap4.css') }}" rel="stylesheet">
 
     @if (file_exists(public_path() . '/css/custom.css'))
+<<<<<<< HEAD
         <link href="{{ asset('css/custom.css') . '?v=' . filemtime(public_path('css/lorekeeper.css')) }}" rel="stylesheet">
     @endif
 
     @include('feed::links')
+=======
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    @endif
+
+    @if ($theme?->prioritize_css)
+        @include('layouts.editable_theme')
+    @endif
+    @if ($theme?->has_css)
+        <style type="text/css" media="screen">
+            @php include_once($theme?->cssUrl)
+            @endphp
+            {{-- css in style tag to so that order matters --}}
+        </style>
+    @endif
+    @if (!$theme?->prioritize_css)
+        @include('layouts.editable_theme')
+    @endif
+
+    {{-- Conditional Themes are dependent on other site features --}}
+    @if ($conditionalTheme?->prioritize_css)
+        @include('layouts.editable_theme', ['theme' => $conditionalTheme])
+    @endif
+    @if ($conditionalTheme?->has_css)
+        <style type="text/css" media="screen">
+            @php include_once($conditionalTheme?->cssUrl)
+            @endphp
+            {{-- css in style tag to so that order matters --}}
+        </style>
+    @endif
+    @if (!$conditionalTheme?->prioritize_css)
+        @include('layouts.editable_theme', ['theme' => $conditionalTheme])
+    @endif
+
+    @if ($decoratorTheme?->prioritize_css)
+        @include('layouts.editable_theme', ['theme' => $decoratorTheme])
+    @endif
+    @if ($decoratorTheme?->has_css)
+        <style type="text/css" media="screen">
+            @php include_once($decoratorTheme?->cssUrl)
+            @endphp
+            {{-- css in style tag to so that order matters --}}
+        </style>
+    @endif
+    @if (!$decoratorTheme?->prioritize_css)
+        @include('layouts.editable_theme', ['theme' => $decoratorTheme])
+    @endif
+
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 </head>
 
 <body>
     <div id="app">
+<<<<<<< HEAD
         <div class="site-header-image" id="header" style="background-image: url('{{ asset('images/header.png') }}');"></div>
         @include('layouts._nav')
         @if (View::hasSection('sidebar'))
             <div class="site-mobile-header bg-secondary"><a href="#" class="btn btn-sm btn-outline-light" id="mobileMenuButton">Menu <i class="fas fa-caret-right ml-1"></i></a></div>
         @endif
+=======
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 
-        <main class="container-fluid">
+        <div class="site-header-image" id="header" style="background-image: url('{{ $decoratorTheme?->headerImageUrl ?? ($conditionalTheme?->headerImageUrl ?? ($theme?->headerImageUrl ?? asset('images/header.png'))) }}');"></div>
+
+        @include('layouts._nav')
+        @if (View::hasSection('sidebar'))
+            <div class="site-mobile-header bg-secondary"><a href="#" class="btn btn-sm btn-outline-light" id="mobileMenuButton">Menu <i class="fas fa-caret-right ml-1"></i></a></div>
+        @endif
+
+        <main class="container-fluid" id="main">
             <div class="row">
 
                 <div class="sidebar col-lg-2" id="sidebar">
@@ -101,6 +160,7 @@
                 </div>
                 <div class="main-content col-lg-8 p-4">
                     <div>
+<<<<<<< HEAD
                         @if (Settings::get('is_maintenance_mode'))
                             <div class="alert alert-secondary">
                                 The site is currently in maintenance mode!
@@ -110,6 +170,9 @@
                             </div>
                         @endif
                         @if (Auth::check() && !config('lorekeeper.extensions.navbar_news_notif'))
+=======
+                        @if (Auth::check() && !Config::get('lorekeeper.extensions.navbar_news_notif'))
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
                             @if (Auth::user()->is_news_unread)
                                 <div class="alert alert-info"><a href="{{ url('news') }}">There is a new news post!</a></div>
                             @endif
@@ -150,7 +213,47 @@
                 $('[data-toggle="tooltip"]').tooltip({
                     html: true
                 });
+<<<<<<< HEAD
                 $('.cp').colorpicker();
+=======
+
+                class BlurValid extends $.colorpicker.Extension {
+                    constructor(colorpicker, options = {}) {
+                        super(colorpicker, options);
+
+                        if (this.colorpicker.inputHandler.hasInput()) {
+                            const onBlur = function(colorpicker, fallback) {
+                                return () => {
+                                    colorpicker.setValue(colorpicker.blurFallback._original.color);
+                                }
+                            };
+                            this.colorpicker.inputHandler.input[0].addEventListener('blur', onBlur(this.colorpicker));
+                        }
+                    }
+
+                    onInvalid(e) {
+                        const color = this.colorpicker.colorHandler.getFallbackColor();
+                        if (color._original.valid)
+                            this.colorpicker.blurFallback = color;
+                    }
+                }
+
+                $.colorpicker.extensions.blurvalid = BlurValid;
+                console.log($['colorpicker'].extensions);
+
+
+
+                $('.cp').colorpicker({
+                    'autoInputFallback': false,
+                    'autoHexInputFallback': false,
+                    'format': 'auto',
+                    'useAlpha': true,
+                    extensions: [{
+                        name: 'blurValid'
+                    }]
+                });
+
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
                 tinymce.init({
                     selector: '.wysiwyg',
                     height: 500,
@@ -164,8 +267,18 @@
                     toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | spoiler-add spoiler-remove | removeformat | code',
                     content_css: [
                         '{{ asset('css/app.css') }}',
-                        '{{ asset('css/lorekeeper.css') }}'
+                        '{{ asset('css/lorekeeper.css') }}',
+                        '{{ asset('css/custom.css') }}',
+                        '{{ asset($theme?->cssUrl) }}',
+                        '{{ asset($conditionalTheme?->cssUrl) }}',
+                        '{{ asset($decoratorTheme?->cssUrl) }}',
+                        '{{ asset('css/all.min.css') }}' //fontawesome
                     ],
+                    content_style: `
+                    {{ str_replace(['<style>', '</style>'], '', view('layouts.editable_theme', ['theme' => $theme])) }}
+                    {{ str_replace(['<style>', '</style>'], '', view('layouts.editable_theme', ['theme' => $conditionalTheme])) }}
+                    {{ str_replace(['<style>', '</style>'], '', view('layouts.editable_theme', ['theme' => $decoratorTheme])) }}
+                    `,
                     spoiler_caption: 'Toggle Spoiler',
                     target_list: false
                 });

@@ -3,9 +3,16 @@
 namespace App\Services\Item;
 
 use App\Models\Item\Item;
+<<<<<<< HEAD
 use App\Services\InventoryManager;
 use App\Services\Service;
 use Illuminate\Support\Facades\DB;
+=======
+use App\Models\Currency\Currency;
+use App\Models\Loot\LootTable;
+use App\Models\Raffle\Raffle;
+use App\Models\Theme;
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 
 class BoxService extends Service {
     /*
@@ -22,8 +29,21 @@ class BoxService extends Service {
      *
      * @return array
      */
+<<<<<<< HEAD
     public function getEditData() {
         return [];
+=======
+    public function getEditData()
+    {
+        return [
+            'characterCurrencies' => Currency::where('is_character_owned', 1)->orderBy('sort_character', 'DESC')->pluck('name', 'id'),
+            'items' => Item::orderBy('name')->pluck('name', 'id'),
+            'currencies' => Currency::where('is_user_owned', 1)->orderBy('name')->pluck('name', 'id'),
+            'tables' => LootTable::orderBy('name')->pluck('name', 'id'),
+            'raffles' => Raffle::where('rolled_at', null)->where('is_active', 1)->orderBy('name')->pluck('name', 'id'),
+            'themes' => Theme::orderBy('name')->where('is_user_selectable', 0)->pluck('name', 'id'),
+        ];
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
     }
 
     /**
@@ -85,6 +105,9 @@ class BoxService extends Service {
                         break;
                     case 'Raffle':
                         $type = 'App\Models\Raffle\Raffle';
+                        break;
+                    case 'Theme':
+                        $type = 'App\Models\Theme';
                         break;
                 }
                 $asset = $type::find($data['rewardable_id'][$key]);

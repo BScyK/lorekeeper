@@ -11,8 +11,12 @@ class UserSettings extends Model {
      * @var array
      */
     protected $fillable = [
+<<<<<<< HEAD
         'is_fto', 'submission_count', 'banned_at', 'ban_reason', 'birthday_setting',
         'deactivate_reason', 'deactivated_at',
+=======
+        'is_fto', 'submission_count', 'banned_at', 'ban_reason', 'birthday_setting', 'theme_id'
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
     ];
 
     /**

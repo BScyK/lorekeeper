@@ -7,11 +7,21 @@ use App\Models\Gallery\GallerySubmission;
 use App\Models\Report\Report;
 use Illuminate\Support\Facades\Auth;
 
+<<<<<<< HEAD
 class PermalinkController extends Controller {
     /**
      * returns replies recursively.
      *
      * @param mixed $id
+=======
+use App\Models\Comment;
+use App\Models\Report\Report;
+
+class PermalinkController extends Controller
+{
+     /**
+     * returns replies recursively
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -20,6 +30,7 @@ class PermalinkController extends Controller {
         //$comments = $comments->sortByDesc('created_at');
         $comment = $comments->find($id);
 
+<<<<<<< HEAD
         if (!$comment) {
             abort(404);
         }
@@ -38,19 +49,34 @@ class PermalinkController extends Controller {
                     abort(404);
                 }
                 switch ($comment->commentable_type) {
+=======
+        if(!$comment) abort(404);
+        if(!$comment->commentable) abort(404);
+
+        // Check if the comment can be viewed
+        switch($comment->type) {
+            case "Staff-User":
+                if(!Auth::check()) abort(404);
+                switch($comment->commentable_type) {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
                     case 'App\Models\Gallery\GallerySubmission':
                         $submission = GallerySubmission::where('id', $comment->commentable_id)->first();
                         $isMod = Auth::user()->hasPower('manage_submissions');
                         $isOwner = ($submission->user_id == Auth::user()->id);
                         $isCollaborator = $submission->collaborators->where('user_id', Auth::user()->id)->first() != null ? true : false;
+<<<<<<< HEAD
                         if (!$isMod && !$isOwner && !$isCollaborator) {
                             abort(404);
                         }
+=======
+                        if(!$isMod && !$isOwner && !$isCollaborator) abort(404);
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
                         break;
                     case 'App\Models\Report\Report':
                         $report = Report::where('id', $comment->commentable_id)->first();
                         $isMod = Auth::user()->hasPower('manage_reports');
                         $isOwner = ($report->user_id == Auth::user()->id);
+<<<<<<< HEAD
                         if (!$isMod && !$isOwner) {
                             abort(404);
                         }
@@ -75,11 +101,27 @@ class PermalinkController extends Controller {
                         if (!Auth::user()->hasPower('manage_submissions')) {
                             abort(404);
                         }
+=======
+                        if(!$isMod && !$isOwner) abort(404);
+                        break;
+                    default:
+                        if(!Auth::user()->isStaff) abort(404);
+                        break;
+                }
+            case "Staff-Staff":
+                if(!Auth::check()) abort(404);
+                if(!Auth::user()->isStaff) abort(404);
+                // More specific filtering depending on circumstance
+                switch($comment->commentable_type) {
+                    case 'App\Models\Gallery\GallerySubmission':
+                        if(!Auth::user()->hasPower('manage_submissions')) abort(404);
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
                         break;
                 }
                 break;
         }
 
+<<<<<<< HEAD
         if ($comment->commentable_type == 'App\Models\User\UserProfile') {
             $comment->location = $comment->commentable->user->url;
         } else {
@@ -87,6 +129,12 @@ class PermalinkController extends Controller {
         }
 
         return view('comments._perma_layout', [
+=======
+        if($comment->commentable_type == 'App\Models\User\UserProfile') $comment->location = $comment->commentable->user->url;
+        else $comment->location = $comment->commentable->url;
+
+        return view('comments._perma_layout',[
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             'comment' => $comment,
         ]);
     }

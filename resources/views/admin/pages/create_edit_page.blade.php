@@ -71,6 +71,7 @@
 @endsection
 
 @section('scripts')
+<<<<<<< HEAD
     @parent
     <script>
         $(document).ready(function() {
@@ -80,4 +81,16 @@
             });
         });
     </script>
+=======
+@parent
+<script>
+$( document ).ready(function() {
+    $('.delete-page-button').on('click', function(e) {
+        e.preventDefault();
+        loadModal("{{ url('admin/pages/delete') }}/{{ $page->id }}", 'Delete Page');
+    });
+});
+
+</script>
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 @endsection

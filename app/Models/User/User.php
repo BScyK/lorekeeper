@@ -10,6 +10,7 @@ use App\Models\Currency\Currency;
 use App\Models\Currency\CurrencyLog;
 use App\Models\Gallery\GalleryCollaborator;
 use App\Models\Gallery\GalleryFavorite;
+<<<<<<< HEAD
 use App\Models\Gallery\GallerySubmission;
 use App\Models\Item\Item;
 use App\Models\Item\ItemLog;
@@ -18,6 +19,9 @@ use App\Models\Rank\Rank;
 use App\Models\Rank\RankPower;
 use App\Models\Shop\ShopLog;
 use App\Models\Submission\Submission;
+=======
+use App\Models\Theme;
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 use App\Traits\Commenter;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -35,8 +39,12 @@ class User extends Authenticatable implements MustVerifyEmail {
      * @var array
      */
     protected $fillable = [
+<<<<<<< HEAD
         'name', 'alias', 'rank_id', 'email', 'email_verified_at', 'password', 'is_news_unread', 'is_banned', 'has_alias', 'avatar', 'is_sales_unread', 'birthday',
         'is_deactivated', 'deactivater_id',
+=======
+        'name', 'alias', 'rank_id', 'email', 'password', 'is_news_unread', 'is_banned', 'has_alias', 'avatar', 'is_sales_unread', 'theme_id', 'decorator_theme_id', 'birthday'
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
     ];
 
     /**
@@ -92,6 +100,32 @@ class User extends Authenticatable implements MustVerifyEmail {
      */
     public function settings() {
         return $this->hasOne(UserSettings::class);
+    }
+
+    /**
+     * Get user theme.
+     */
+    public function theme()
+    {
+        return $this->belongsTo('App\Models\Theme');
+    }
+
+    /**
+     * Get user decorator .
+     */
+    public function decoratorTheme() {
+        return $this->belongsTo('App\Models\Theme', 'decorator_theme_id');
+    }
+
+
+    /**
+     * Get User Granted Themes 
+     */
+    /**
+     * Get user theme.
+     */
+    public function themes() {
+        return $this->belongsToMany('App\Models\Theme', 'user_themes')->withPivot('id');
     }
 
     /**
@@ -185,6 +219,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     /**
      * Get all of the user's character bookmarks.
      */
+<<<<<<< HEAD
     public function bookmarks() {
         return $this->hasMany(CharacterBookmark::class)->where('user_id', $this->id);
     }
@@ -194,6 +229,11 @@ class User extends Authenticatable implements MustVerifyEmail {
      */
     public function commentLikes() {
         return $this->hasMany(CommentLike::class);
+=======
+    public function bookmarks()
+    {
+        return $this->hasMany('App\Models\Character\CharacterBookmark')->where('user_id', $this->id);
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
     }
 
     /**********************************************************************************************
@@ -243,6 +283,18 @@ class User extends Authenticatable implements MustVerifyEmail {
 
      **********************************************************************************************/
 
+    /**
+     * Checks if the user has the named recipe
+     *
+     * @return bool
+     */
+    public function hasTheme($theme_id) {
+        $theme = Theme::find($theme_id);
+        $user_has = $this->recipes && $this->recipes->contains($theme);
+        $default = $theme->is_user_selectable;
+        return $default ? true : $user_has;
+    }
+    
     /**
      * Get the user's alias.
      *
@@ -446,6 +498,7 @@ class User extends Authenticatable implements MustVerifyEmail {
     /**
      * Check if user is of age.
      */
+<<<<<<< HEAD
     public function getcheckBirthdayAttribute() {
         $bday = $this->birthday;
         if (!$bday || $bday->diffInYears(carbon::now()) < 13) {
@@ -453,6 +506,13 @@ class User extends Authenticatable implements MustVerifyEmail {
         } else {
             return true;
         }
+=======
+    public function getcheckBirthdayAttribute()
+    {
+        $bday = $this->birthday;
+        if(!$bday || $bday->diffInYears(carbon::now()) < 13) return false;
+        else return true;
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
     }
     /**********************************************************************************************
 

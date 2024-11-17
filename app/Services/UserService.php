@@ -127,9 +127,12 @@ class UserService extends Service {
 
     /**
      * Updates the user's password.
+<<<<<<< HEAD
      *
      * @param array                 $data
      * @param \App\Models\User\User $user
+=======
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
      *
      * @return bool
      */
@@ -148,7 +151,11 @@ class UserService extends Service {
             $user->save();
 
             return $this->commitReturn(true);
+<<<<<<< HEAD
         } catch (\Exception $e) {
+=======
+        } catch(\Exception $e) {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             $this->setError('error', $e->getMessage());
         }
 
@@ -157,9 +164,12 @@ class UserService extends Service {
 
     /**
      * Updates the user's email and resends a verification email.
+<<<<<<< HEAD
      *
      * @param array                 $data
      * @param \App\Models\User\User $user
+=======
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
      *
      * @return bool
      */
@@ -174,7 +184,48 @@ class UserService extends Service {
     }
 
     /**
+<<<<<<< HEAD
      * Updates user's birthday.
+=======
+     * Updates user's birthday
+     */
+    public function updateBirthday($data, $user)
+    {
+        $user->birthday = $data;
+        $user->save();
+
+        return true;
+    }
+
+    /**
+     * Updates user's birthday setting
+     */
+    public function updateDOB($data, $user)
+    {
+        $user->settings->birthday_setting = $data;
+        $user->settings->save();
+
+        return true;
+    }
+
+    /**
+     * Updates the user's theme.
+     *
+     * @param  array                  $data
+     * @param  \App\Models\User\User  $user
+     * @return bool
+     */
+    public function updateTheme($data, $user)
+    {
+        $user->theme_id = $data['theme'];
+        $user->decorator_theme_id = $data['decorator_theme'];
+        $user->save();
+        return true;
+    }
+
+    /**
+     * Updates the user's avatar.
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
      *
      * @param mixed $data
      * @param mixed $user
@@ -183,6 +234,7 @@ class UserService extends Service {
         DB::beginTransaction();
 
         try {
+<<<<<<< HEAD
             $user->birthday = $data;
             $user->save();
 
@@ -293,6 +345,13 @@ class UserService extends Service {
 
             if ($user->avatar != 'default.jpg') {
                 $file = 'images/avatars/'.$user->avatar;
+=======
+            if(!$avatar) throw new \Exception ("Please upload a file.");
+            $filename = $user->id . '.' . $avatar->getClientOriginalExtension();
+
+            if ($user->avatar !== 'default.jpg') {
+                $file = 'images/avatars/' . $user->avatar;
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
                 //$destinationPath = 'uploads/' . $id . '/';
 
                 if (File::exists($file)) {
@@ -304,6 +363,7 @@ class UserService extends Service {
 
             // Checks if uploaded file is a GIF
             if ($avatar->getClientOriginalExtension() == 'gif') {
+<<<<<<< HEAD
                 if (!$avatar->move(public_path('images/avatars'), $filename)) {
                     throw new \Exception('Failed to move file.');
                 }
@@ -311,13 +371,29 @@ class UserService extends Service {
                 if (!Image::make($avatar)->resize(150, 150)->save(public_path('images/avatars/'.$filename))) {
                     throw new \Exception('Failed to process avatar.');
                 }
+=======
+
+                if(!copy($avatar, $file)) throw new \Exception("Failed to copy file.");
+                if(!$file->move( public_path('images/avatars', $filename))) throw new \Exception("Failed to move file.");
+                if(!$avatar->move( public_path('images/avatars', $filename))) throw new \Exception("Failed to move file.");
+
+            }
+
+            else {
+                if(!Image::make($avatar)->resize(150, 150)->save( public_path('images/avatars/' . $filename)))
+                throw new \Exception("Failed to process avatar.");
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             }
 
             $user->avatar = $filename;
             $user->save();
 
             return $this->commitReturn($avatar);
+<<<<<<< HEAD
         } catch (\Exception $e) {
+=======
+        } catch(\Exception $e) {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             $this->setError('error', $e->getMessage());
         }
 
@@ -325,10 +401,14 @@ class UserService extends Service {
     }
 
     /**
+<<<<<<< HEAD
      * Updates a user's username.
      *
      * @param string                $username
      * @param \App\Models\User\User $user
+=======
+     * Bans a user.
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
      *
      * @return bool
      */
@@ -466,7 +546,11 @@ class UserService extends Service {
             $user->settings->save();
 
             return $this->commitReturn(true);
+<<<<<<< HEAD
         } catch (\Exception $e) {
+=======
+        } catch(\Exception $e) {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             $this->setError('error', $e->getMessage());
         }
 
@@ -475,9 +559,12 @@ class UserService extends Service {
 
     /**
      * Unbans a user.
+<<<<<<< HEAD
      *
      * @param \App\Models\User\User $user
      * @param \App\Models\User\User $staff
+=======
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
      *
      * @return bool
      */
@@ -500,12 +587,17 @@ class UserService extends Service {
             }
 
             return $this->commitReturn(true);
+<<<<<<< HEAD
         } catch (\Exception $e) {
+=======
+        } catch(\Exception $e) {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
             $this->setError('error', $e->getMessage());
         }
 
         return $this->rollbackReturn(false);
     }
+<<<<<<< HEAD
 
     /**
      * Deactivates a user.
@@ -643,4 +735,6 @@ class UserService extends Service {
 
         return $this->rollbackReturn(false);
     }
+=======
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 }

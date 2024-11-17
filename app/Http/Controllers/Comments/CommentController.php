@@ -20,8 +20,25 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Honeypot\ProtectAgainstSpam;
 
+<<<<<<< HEAD
 class CommentController extends Controller {
     public function __construct() {
+=======
+use App\Models\Comment;
+use App\Models\Sales\Sales;
+use App\Models\User\User;
+use App\Models\News;
+use App\Models\Gallery\GallerySubmission;
+use App\Models\Report\Report;
+use App\Models\SitePage;
+
+use Notifications;
+
+class CommentController extends Controller implements CommentControllerInterface
+{
+    public function __construct()
+    {
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
         $this->middleware('web');
 
         if (config('comments.guest_commenting') == true) {

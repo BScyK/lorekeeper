@@ -11,6 +11,21 @@ toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncent
 content_css: [
 '//www.tiny.cloud/css/codepen.min.css',
 '{{ asset('css/app.css') }}',
+<<<<<<< HEAD
 '{{ asset('css/lorekeeper.css') }}'
 ]
+=======
+'{{ asset('css/lorekeeper.css') }}',
+'{{ asset('css/custom.css') }}',
+'{{ asset($theme?->cssUrl) }}',
+'{{ asset($conditionalTheme?->cssUrl) }}',
+'{{ asset($decoratorTheme?->cssUrl) }}',
+'{{ asset('css/all.min.css') }}' //fontawesome
+],
+content_style: `
+{{ str_replace(['<style>', '</style>'], '', view('layouts.editable_theme', ['theme' => $theme])) }}
+{{ str_replace(['<style>', '</style>'], '', view('layouts.editable_theme', ['theme' => $conditionalTheme])) }}
+{{ str_replace(['<style>', '</style>'], '', view('layouts.editable_theme', ['theme' => $decoratorTheme])) }}
+`,
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 });

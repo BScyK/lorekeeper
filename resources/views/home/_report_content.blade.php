@@ -39,6 +39,7 @@
     @endif
 </div>
 
+<<<<<<< HEAD
 <h2>Report Details</h2>
 <div class="card mb-3">
     <div class="card-body">{!! nl2br(htmlentities($report->comments)) !!}</div>
@@ -46,6 +47,11 @@
 @if ((Auth::check() && $report->status == 'Assigned' && $report->user_id == Auth::user()->id) || Auth::user()->hasPower('manage_reports'))
     <div class="alert alert-danger">Admins will be alerted by new comments, however to keep the conversation organised we ask that you please reply to the admin comment.</div>
     @comments(['type' => 'Staff-User', 'model' => $report, 'perPage' => 5])
+=======
+@if(Auth::check() && $report->status == 'Assigned' && $report->user == Auth::user() || Auth::user()->hasPower('manage_reports'))
+<div class="alert alert-danger">Admins will be alerted by new comments, however to keep the conversation organised we ask that you please reply to the admin comment.</div>
+    @comments([ 'type' => 'Staff-User', 'model' => $report, 'perPage' => 5 ])
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 @elseif($report->status == 'Closed')
     <div class="alert alert-danger"> You cannot comment on a closed ticket. </div>
 @else
@@ -53,6 +59,7 @@
 @endif
 @if (Auth::check() && $report->staff_comments && ($report->user_id == Auth::user()->id || Auth::user()->hasPower('manage_reports')))
     <h2>Staff Comments</h2>
+<<<<<<< HEAD
     <div class="card mb-3">
         <div class="card-body">
             @if (isset($report->parsed_staff_comments))
@@ -62,4 +69,13 @@
             @endif
         </div>
     </div>
+=======
+    <div class="card mb-3"><div class="card-body">
+	    @if(isset($report->parsed_staff_comments))
+            {!! $report->parsed_staff_comments !!}
+        @else
+            {!! $report->staff_comments !!}
+        @endif
+		</div></div>
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
 @endif

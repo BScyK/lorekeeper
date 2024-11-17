@@ -38,7 +38,13 @@ class CharacterController extends Controller {
     /**
      * Create a new controller instance.
      */
+<<<<<<< HEAD
     public function __construct() {
+=======
+    public function __construct()
+    {
+        parent::__construct();
+>>>>>>> 40004c366c26637c703cd497a00681348f4783a9
         $this->middleware(function ($request, $next) {
             $slug = Route::current()->parameter('slug');
             $query = Character::myo(0)->where('slug', $slug);
